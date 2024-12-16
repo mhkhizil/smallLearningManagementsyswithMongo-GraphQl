@@ -1,13 +1,20 @@
-import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import {
+  Column,
+  Entity,
+  ObjectIdColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@ObjectType()
+@Entity()
 export class Lesson {
-  @Field(() => ID)
+  @ObjectIdColumn()
+  _id: string;
+  @PrimaryGeneratedColumn()
   id: string;
-  @Field()
+  @Column()
   name: string;
-  @Field()
+  @Column()
   startDate: string;
-  @Field()
+  @Column()
   endDate: string;
 }

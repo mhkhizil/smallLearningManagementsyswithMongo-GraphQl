@@ -4,13 +4,22 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { LessonModule } from './lesson/lesson.module';
 import { ApolloDriver } from '@nestjs/apollo';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Lesson } from './lesson/entities/lesson.entity';
 @Module({
   imports: [
-    GraphQLModule.forRoot({
-      driver:ApolloDriver,
-      autoSchemaFile:true
+    TypeOrmModule.forRoot({
+      type: 'mongodb',
+      synchronize: true,
+      useUnifiedTopology: true,
+      url: 'mongodb://localhost/school',
+      entities: [Lesson],
     }),
-    LessonModule
+    GraphQLModule.forRoot({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+    }),
+    LessonModule,
   ],
   controllers: [AppController],
   providers: [AppService],
