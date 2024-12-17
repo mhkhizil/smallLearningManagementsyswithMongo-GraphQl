@@ -10,35 +10,37 @@ export class LessonResolver {
 
   @Mutation(() => Lesson)
   createLesson(
-    @Args('createLessonInput') createLessonInput: CreateLessonInput,
+    @Args('name') name: string,
+    @Args('startDate') startDate: string,
+    @Args('endDate') endDate: string,
   ) {
-    return this.lessonService.create(createLessonInput);
+    return this.lessonService.create(name, startDate, endDate);
   }
 
-  @Query(() => [Lesson], { name: 'lesson' })
-  findAll() {
-    return [{
-      id: 'a339948405',
-      name: 'Physic Class',
-      startDate: new Date().toISOString,
-      endDate: new Date().toISOString,
-    }];
-  }
-
-  // @Query(() => Lesson, { name: 'lesson' })
-  // findOne(@Args('id', { type: () => Int }) id: number) {
-  //   return this.lessonService.findOne(id);
+  // @Query(() => [Lesson], { name: 'lesson' })
+  // findAll() {
+  //   return [{
+  //     id: 'a339948405',
+  //     name: 'Physic Class',
+  //     startDate: new Date().toISOString,
+  //     endDate: new Date().toISOString,
+  //   }];
   // }
 
-  @Mutation(() => Lesson)
-  updateLesson(
-    @Args('updateLessonInput') updateLessonInput: UpdateLessonInput,
-  ) {
-    return this.lessonService.update(updateLessonInput.id, updateLessonInput);
+  @Query(() => Lesson, { name: 'lesson' })
+  findOne(@Args('id', { type: () => String }) id: string) {
+    return this.lessonService.findOne(id);
   }
 
-  @Mutation(() => Lesson)
-  removeLesson(@Args('id', { type: () => Int }) id: number) {
-    return this.lessonService.remove(id);
-  }
+  // @Mutation(() => Lesson)
+  // updateLesson(
+  //   @Args('updateLessonInput') updateLessonInput: UpdateLessonInput,
+  // ) {
+  //   return this.lessonService.update(updateLessonInput.id, updateLessonInput);
+  // }
+
+  // @Mutation(() => Lesson)
+  // removeLesson(@Args('id', { type: () => Int }) id: number) {
+  //   return this.lessonService.remove(id);
+  // }
 }
