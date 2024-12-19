@@ -10,22 +10,17 @@ export class LessonResolver {
 
   @Mutation(() => Lesson)
   createLesson(
-    @Args('name') name: string,
-    @Args('startDate') startDate: string,
-    @Args('endDate') endDate: string,
+    @Args('createLessonInput') createLessonInput:CreateLessonInput
   ) {
-    return this.lessonService.create(name, startDate, endDate);
+    return this.lessonService.create(createLessonInput);
   }
 
-  // @Query(() => [Lesson], { name: 'lesson' })
-  // findAll() {
-  //   return [{
-  //     id: 'a339948405',
-  //     name: 'Physic Class',
-  //     startDate: new Date().toISOString,
-  //     endDate: new Date().toISOString,
-  //   }];
-  // }
+  @Query(() => [Lesson], { name: 'lessons' })
+  findAll() {
+ 
+    
+    return this.lessonService.findAll()
+  }
 
   @Query(() => Lesson, { name: 'lesson' })
   findOne(@Args('id', { type: () => String }) id: string) {
