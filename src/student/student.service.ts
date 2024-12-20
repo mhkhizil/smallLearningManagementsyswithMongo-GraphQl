@@ -1,11 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { CreateStudentInput } from './dto/create-student.input';
 import { UpdateStudentInput } from './dto/update-student.input';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Student } from './entities/student.entity';
+import { v4 as uuid } from 'uuid';
+import { findSourceMap } from 'module';
 
 @Injectable()
 export class StudentService {
+  constructor(@InjectRepository(Student) private studentRepository) {}
   create(createStudentInput: CreateStudentInput) {
-    return 'This action adds a new student';
+    const { firstName, lastName } = createStudentInput;
+    const student = this.studentRepository.create({
+      id: uuid(),
+      firstName,
+      lastName
+    });
+    return this.studentRepository.save(student);
   }
 
   findAll() {
